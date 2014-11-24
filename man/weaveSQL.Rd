@@ -1,9 +1,7 @@
 \name{weaveSQL}
 \alias{weaveSQL}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{Build a script}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -53,30 +51,30 @@ weaveSQL(page, var_list, repeat_var_list = NULL)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (page, var_list, repeat_var_list = NULL) 
+function (page, var_list, repeat_var_list = NULL)
 {
     for (ctr1 in 1:nrow(var_list)) {
-        page <- gsub(paste("${", var_list[ctr1, "variable"], 
+        page <- gsub(paste("${", var_list[ctr1, "variable"],
             "}", sep = ""), var_list[ctr1, "value"], page, fixed = TRUE)
     }
     ret <- ""
     if (!is.null(repeat_var_list)) {
         for (ctr1 in 1:length(page)) {
-            if (regexpr("${repeat order=", page[ctr1], fixed = T) > 
+            if (regexpr("${repeat order=", page[ctr1], fixed = T) >
                 0) {
                 for (ctr2 in 1:length(repeat_var_list)) {
-                  result <- regexpr(paste("${repeat order=", 
+                  result <- regexpr(paste("${repeat order=",
                     ctr2, "}", sep = ""), page[ctr1], fixed = T)
                   if (result > 0) {
-                    result2 <- regexpr("${/repeat}", page[ctr1], 
+                    result2 <- regexpr("${/repeat}", page[ctr1],
                       fixed = T)
-                    temp_line <- substr(page[ctr1], result[1] + 
-                      attributes(result)$match.length, result2[1] - 
+                    temp_line <- substr(page[ctr1], result[1] +
+                      attributes(result)$match.length, result2[1] -
                       1)
                     for (ctr3 in 1:nrow(repeat_var_list[[ctr2]])) {
                       for (ctr4 in 1:ncol(repeat_var_list[[ctr2]])) {
-                        temp_line <- gsub(paste("${", names(repeat_var_list[[ctr2]])[ctr4], 
-                          "}", sep = ""), repeat_var_list[[ctr2]][ctr3, 
+                        temp_line <- gsub(paste("${", names(repeat_var_list[[ctr2]])[ctr4],
+                          "}", sep = ""), repeat_var_list[[ctr2]][ctr3,
                           ctr4], temp_line, fixed = TRUE)
                       }
                       ret <- c(ret, temp_line)
@@ -95,7 +93,7 @@ function (page, var_list, repeat_var_list = NULL)
     return_val <- ""
     for (ctr1 in 1:length(ret)) {
         if (nchar(ret[ctr1]) > 0) {
-            return_val <- paste(return_val, ret[ctr1], "\n", 
+            return_val <- paste(return_val, ret[ctr1], "\n",
                 sep = "")
         }
     }

@@ -1,15 +1,9 @@
 \name{executeQuery}
 \alias{executeQuery}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
-\description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\usage{
-executeQuery(query_str, DW, log_file = NULL)
-}
+\title{Execute a SQL script}
+\description{Provided a connection, this function executes given scripts}
+\usage{executeQuery(query_str, DW, log_file = NULL)}
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{query_str}{
@@ -53,10 +47,10 @@ executeQuery(query_str, DW, log_file = NULL)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (query_str, DW, log_file = NULL) 
+function (query_str, DW, log_file = NULL)
 {
     temp_query_str <- strsplit(query_str, ";", fixed = TRUE)[[1]]
-    temp_query_str <- temp_query_str[nchar(temp_query_str) > 
+    temp_query_str <- temp_query_str[nchar(temp_query_str) >
         10]
     if (length(temp_query_str) == 1) {
         ret <- sqlQuery(DW, query_str)
@@ -64,7 +58,7 @@ function (query_str, DW, log_file = NULL)
     else {
         ret <- ""
         for (i in 1:length(temp_query_str)) {
-            ret <- paste(ret, sqlQuery(DW, temp_query_str[i]), 
+            ret <- paste(ret, sqlQuery(DW, temp_query_str[i]),
                 sep = "\n\n")
         }
     }
