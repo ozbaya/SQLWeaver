@@ -1,0 +1,5 @@
+variable	value
+db_name	my_db
+table_prefix	us
+site_id	(0,100)
+run_dt	'2014-11-01'
